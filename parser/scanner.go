@@ -47,10 +47,10 @@ func Scanner(file *os.File) chan interface{} {
 				ch <- NewTsp(record)
 			case "TMV":
 				ch <- NewTmv(record)
-			case "TAS":
-				ch <- NewTas(record)
 			case "NTE":
 				ch <- NewNte(record)
+			case "TAS":
+				ch <- NewTas(record)
 			case "PIT":
 				ch <- NewPit(record)
 			}
