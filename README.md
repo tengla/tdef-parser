@@ -18,5 +18,6 @@ You can pipe it to a file
 
 Or query with jq
 ```
-./dist/parser -file <path to .tsv> -print | jq '.Thds[].Thd'
+./dist/parser -file <path to .tsv> -print | \
+  jq '.Thds[].Thd|{TrainID,TrainOwner,InitialDateOfOperation}'
 ```
