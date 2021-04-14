@@ -2,11 +2,38 @@ package parser
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strings"
 )
 
-func Scanner(file *os.File) chan interface{} {
+// NewRecord - dispatch to correct type
+func NewRecord(record []string) interface{} {
+	switch record[0] {
+	case "PIF":
+		return NewPif(record)
+	case "BID":
+		return NewBid(record)
+	case "THD":
+		return NewThd(record)
+	case "TDT":
+		return NewTdt(record)
+	case "TSP":
+		return NewTsp(record)
+	case "TMV":
+		return NewTmv(record)
+	case "NTE":
+		return NewNte(record)
+	case "TAS":
+		return NewTas(record)
+	case "PIT":
+		return NewPit(record)
+	default:
+		return nil
+	}
+}
+
+func Scanner(file *os.File, dbg string) chan interface{} {
 
 	ch := make(chan interface{})
 
@@ -24,6 +51,10 @@ func Scanner(file *os.File) chan interface{} {
 				continue
 			}
 
+			if dbg == id {
+				fmt.Printf("%s[%d] %+v\n", id, len(record), record[1:])
+			}
+
 			if len(record) < 2 {
 				continue
 			}
@@ -34,26 +65,12 @@ func Scanner(file *os.File) chan interface{} {
 				continue
 			}
 
-			switch id {
-			case "PIF":
-				ch <- NewPif(record)
-			case "BID":
-				ch <- NewBid(record)
-			case "THD":
-				ch <- NewThd(record)
-			case "TDT":
-				ch <- NewTdt(record)
-			case "TSP":
-				ch <- NewTsp(record)
-			case "TMV":
-				ch <- NewTmv(record)
-			case "NTE":
-				ch <- NewNte(record)
-			case "TAS":
-				ch <- NewTas(record)
-			case "PIT":
-				ch <- NewPit(record)
+			v := NewRecord(record)
+
+			if dbg == id {
+				fmt.Printf("%+v\n", v)
 			}
+			ch <- v
 		}
 		close(ch)
 	}()
