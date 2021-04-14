@@ -1,8 +1,6 @@
 package parser
 
-import "fmt"
-
-// Tdt - Train data
+// Tdt - Train data, Change-en-route
 type Tdt struct {
 	Type                    string
 	ActionCode              string
@@ -22,11 +20,11 @@ type Tdt struct {
 	GreenText               string
 	Reservations            string
 	CateringFacilities      string
-	PreferredStockType      string `json:"preferred_stock_type"`
-	ActualTrainLength       string `json:"actual_train_length"`
-	ActualTrainWeight       string `json:"actual_train_weight"`
-	SeatsRequired           string `json:"seat_required"`
-	ProductCode             string `json:"product_code"`
+	PreferredStockType      string
+	ActualTrainLength       string
+	ActualTrainWeight       string
+	SeatsRequired           string
+	ProductCode             string
 }
 
 // NewTdt - new tdt record
@@ -82,6 +80,5 @@ func NewTdt(record []string) *Tdt {
 			tdt.ProductCode = value
 		}
 	}
-	fmt.Println(len(record))
 	return tdt
 }

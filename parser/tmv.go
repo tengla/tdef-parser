@@ -1,6 +1,6 @@
 package parser
 
-// Tmv - Train data
+// Tmv - Train data move
 type Tmv struct {
 	Type                 string
 	ActionCode           string

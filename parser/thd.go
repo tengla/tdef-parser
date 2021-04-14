@@ -1,6 +1,6 @@
 package parser
 
-// Thd - Train data
+// Thd - Train data header
 type Thd struct {
 	Type                   string
 	ActionCode             string

@@ -1,6 +1,6 @@
 package parser
 
-// Tsp - Train data
+// Tsp - Train stop record
 type Tsp struct {
 	Type                string
 	ActionCode          string
