@@ -4,9 +4,6 @@ import (
 	tdef "github.com/tengla/tdef-parser/parser"
 )
 
-// Record
-func Record() {}
-
 type TdtRecord struct {
 	Tdt  *tdef.Tdt
 	Tsps []*tdef.Tsp
