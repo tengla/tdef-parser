@@ -8,11 +8,13 @@ import (
 	"os"
 
 	tdef "github.com/tengla/tdef-parser/parser"
+	"github.com/tengla/tdef-parser/serializer"
 )
 
 var (
 	sourcefile = flag.String("file", "", "The tdef file")
 	print      = flag.Bool("print", false, "print results")
+	serialize  = flag.Bool("serialize", false, "dump binary records")
 	dbg        = flag.String("dbg", "", "debug record type")
 )
 
@@ -60,6 +62,7 @@ func main() {
 	}
 	records := tdef.Scanner(file, *dbg)
 	var bid BidRecord
+	records_count := 0
 	for record := range records {
 		switch r := record.(type) {
 		case *tdef.Bid:
@@ -72,6 +75,11 @@ func main() {
 					fmt.Println(string(data))
 				}
 			}
+			if bid.Bid != nil && *serialize {
+				dat := fmt.Sprintf("./tmp/dat%06d.dat", records_count)
+				serializer.ToBin(dat, bid)
+			}
+			records_count += 1
 			// now start a new
 			bid = BidRecord{}
 			bid.Bid = r
