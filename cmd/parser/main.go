@@ -14,7 +14,7 @@ import (
 var (
 	sourcefile = flag.String("file", "", "The tdef file")
 	print      = flag.Bool("print", false, "print results")
-	serialize  = flag.Bool("serialize", false, "dump binary records")
+	serialize  = flag.String("serialize", "", "dump binary records to directory")
 	dbg        = flag.String("dbg", "", "debug record type")
 )
 
@@ -75,8 +75,8 @@ func main() {
 					fmt.Println(string(data))
 				}
 			}
-			if bid.Bid != nil && *serialize {
-				dat := fmt.Sprintf("./tmp/dat%06d.dat", records_count)
+			if bid.Bid != nil && len(*serialize) > 0 {
+				dat := fmt.Sprintf("%s/dat%06d.dat", *serialize, records_count)
 				serializer.ToBin(dat, bid)
 			}
 			records_count += 1
